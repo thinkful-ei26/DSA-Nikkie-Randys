@@ -130,7 +130,7 @@ class LinkedList {
 
     while(currentNode.next!==null){
       if(currentNode.data===item){
-        return currentNode;
+        return currentNode.data;
       }
       else{
         currentNode = currentNode.next;
@@ -171,8 +171,8 @@ class LinkedList {
 function displayList(list){
   let currNode = list.head;
   while (currNode !== null) {
-      console.log(currNode.data);
-      currNode = currNode.next;
+    console.log(currNode.data);
+    currNode = currNode.next;
   }
 }
 
@@ -230,25 +230,43 @@ function findLast(SLL){
 }
 
 function WhatDoesThisProgramDo(lst){
-    let tick = 0;
-    let current = lst.head;
-    while(current !== null){
-      tick++
-        let newNode = current;
-        while (newNode.next !== null) {
-          tick++
-            if (newNode.next.data === current.data) {
-              tick++
-              newNode.next = newNode.next.next;
-            }
-            else{
-              tick++
-              newNode = newNode.next;
-            }
-        }
-        current = current.next;
+  let tick = 0;
+  let current = lst.head;
+  while(current !== null){
+    tick++;
+    let newNode = current;
+    while (newNode.next !== null) {
+      tick++;
+      if (newNode.next.data === current.data) {
+        tick++;
+        newNode.next = newNode.next.next;
+      }
+      else{
+        tick++;
+        newNode = newNode.next;
+      }
     }
-    console.log(tick)
+    current = current.next;
+  }
+  console.log(tick);
+}
+
+function findThirdFromLast(SLL){
+  //first find the size of the SLL
+  let s = size(SLL);
+  let position = s-2;
+  console.log('the size is', s);
+  //iterate through LL and find the node at the position 
+  let count = 1;
+  let currentNode = SLL.head;
+  while(currentNode!==null){
+    if(count===position){
+      return currentNode.data;
+    }
+    count++;
+    currentNode= currentNode.next;
+  }
+  return null;
 }
 
 // Reverse a list
@@ -269,12 +287,12 @@ function reverseList(list){
   let nextNode = list.head;
   //null <- 1 <- 2 - 3 <- 4
   while(current!==null){
-    nextNode = current.next
-    current.next = prev
-    prev = current
-    current = nextNode
+    nextNode = current.next;
+    current.next = prev;
+    prev = current;
+    current = nextNode;
   }
-  list.head = prev
+  list.head = prev;
 }
 
 function main() {
@@ -287,6 +305,7 @@ function main() {
   SLL.insertLast('Boomer');
   SLL.insertLast('Helo');
   SLL.insertLast('Husker');
+  console.log('third from last is:', findThirdFromLast(SLL));
   // WhatDoesThisProgramDo(SLL);
   reverseList(SLL);
   displayList(SLL);
