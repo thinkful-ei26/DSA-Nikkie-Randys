@@ -269,6 +269,24 @@ function findThirdFromLast(SLL){
   return null;
 }
 
+function findMiddle(SLL){
+  //find the size
+  let s = size(SLL);
+  //divide by 2 and round up 
+  let position = Math.ceil(s/2);
+  //iterate through with a count and when the count===position, thats the middle
+  let current = SLL.head;
+  let count =1;
+  while(current!==null){
+    if(count===position){
+      return current.data;
+    }
+    count++;
+    current=current.next;
+  }
+  return null;
+}
+
 // Reverse a list
 // Write an algorithm to reverse a linked list. The runtime complexity of 
 // your algorithm should be linear O(n). For this exercise, notice, we
@@ -303,9 +321,11 @@ function main() {
 
   SLL.insertFirst('Apollo');
   SLL.insertLast('Boomer');
-  SLL.insertLast('Helo');
+  // SLL.insertLast('Helo');
   SLL.insertLast('Husker');
+  SLL.insertLast('Nikkie');
   console.log('third from last is:', findThirdFromLast(SLL));
+  console.log('middle is:', findMiddle(SLL));
   // WhatDoesThisProgramDo(SLL);
   reverseList(SLL);
   displayList(SLL);
