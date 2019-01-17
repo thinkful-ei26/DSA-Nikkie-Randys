@@ -270,21 +270,23 @@ function findThirdFromLast(SLL){
 }
 
 function findMiddle(SLL){
-  //find the size
-  let s = size(SLL);
-  //divide by 2 and round up 
-  let position = Math.ceil(s/2);
-  //iterate through with a count and when the count===position, thats the middle
+  //while traversing, 1->2->3->4->5
+  //middle=middle.next
+
   let current = SLL.head;
-  let count =1;
+  let middle = SLL.head;
+
   while(current!==null){
-    if(count===position){
-      return current.data;
+    if(current.next!==null && current.next.next!==null){
+      middle=middle.next;
+      current=current.next.next;
     }
-    count++;
-    current=current.next;
+    else{
+      return middle.data;
+    }
+
   }
-  return null;
+  return middle.data;
 }
 
 // Reverse a list
@@ -345,5 +347,3 @@ function main() {
 }
 
 main();
-
-
