@@ -168,14 +168,16 @@ class LinkedList {
   }
 }
 
-function display(SLL){
-  return JSON.stringify(SLL);
-  //if we just want to display the values, we could traverse through the LL and push each value of the Node into an array, and then return the array
+function displayList(list){
+  let currNode = list.head;
+  while (currNode !== null) {
+      console.log(currNode.data);
+      currNode = currNode.next;
+  }
 }
 
 function size(SLL){
   let count=0;
-
   let currentNode=SLL.head;
 
   while(currentNode!==null){
@@ -227,29 +229,82 @@ function findLast(SLL){
   return null;
 }
 
+function WhatDoesThisProgramDo(lst){
+    let tick = 0;
+    let current = lst.head;
+    while(current !== null){
+      tick++
+        let newNode = current;
+        while (newNode.next !== null) {
+          tick++
+            if (newNode.next.data === current.data) {
+              tick++
+              newNode.next = newNode.next.next;
+            }
+            else{
+              tick++
+              newNode = newNode.next;
+            }
+        }
+        current = current.next;
+    }
+    console.log(tick)
+}
+
+// Reverse a list
+// Write an algorithm to reverse a linked list. The runtime complexity of 
+// your algorithm should be linear O(n). For this exercise, notice, we
+//  are not asking you just to print the linked list in reverse or use
+//  another linked list to store the value in reverse order. Your program
+//   should reverse the direction of a given singly-linked list. In other 
+//  words, all pointers should point backward. BONUS: Solve this problem 
+//  using recursive algorithm (and vice versa).
+
+function reverseList(list){
+  //should actually reverse the direction of all pointers
+  //each item should point to previous item 
+  //head needs to point null
+  let prev = null;
+  let current = list.head;
+  let nextNode = list.head;
+  //null <- 1 <- 2 - 3 <- 4
+  while(current!==null){
+    nextNode = current.next
+    current.next = prev
+    prev = current
+    current = nextNode
+  }
+  list.head = prev
+}
+
 function main() {
   const SLL = new LinkedList();
-  const test = new LinkedList();
+  // const test = new LinkedList();
 
-  test.insertFirst('test');
+  // test.insertFirst('test');
 
   SLL.insertFirst('Apollo');
   SLL.insertLast('Boomer');
   SLL.insertLast('Helo');
   SLL.insertLast('Husker');
+  // WhatDoesThisProgramDo(SLL);
+  reverseList(SLL);
+  displayList(SLL);
   // SLL.insertLast('Starbuck')
   // SLL.insertLast('Tauhida')
   // SLL.remove('squirrel')
-  SLL.insertBefore('Athena', 'Husker');
-  SLL.insertAfter('Hotdog', 'Helo');
-  SLL.insertAt('Nikkie', 7);
-  console.log(display(SLL));
-  console.log(size(SLL));
-  console.log(isEmpty(SLL));
-  console.log(isEmpty(test));
-  console.log(findPrevious(SLL, "Nikkie"));
-  console.log(findLast(test));
+  // SLL.insertBefore('Athena', 'Husker');
+  // SLL.insertAfter('Hotdog', 'Helo');
+  // SLL.insertAt('Nikkie', 7);
+  // console.log(display(SLL));
+  // console.log(size(SLL));
+  // console.log(isEmpty(SLL));
+  // console.log(isEmpty(test));
+  // console.log(findPrevious(SLL, "Nikkie"));
+  // console.log(findLast(test));
+
 }
 
 main();
+
 
