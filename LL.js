@@ -21,22 +21,24 @@ class LinkedList {
       this.insertFirst(item);
     }
 
-    const newNode = new _Node(item, null);
     let tempNode = this.head;
 
     while(tempNode.next!==null){
       tempNode  = tempNode.next;
     }
 
-    tempNode.next = newNode;
+    tempNode.next = new _Node(item, null);;
     return;
   }
 
+  //inserts a new node before the node containing the key
   insertBefore(item, key){
+    //if the list is empty, do nothing 
     if(this.head===null){
-      this.insertFirst(item);
+      return;
     }
 
+    //if the key matches the first node
     if(key===this.head.data){
       this.insertFirst(item);
       return;
@@ -58,6 +60,10 @@ class LinkedList {
         currentNode = currentNode.next;
       }
     }
+    if(currentNode === null){
+      console.log('Node not found to insert');
+      return;
+    }
   }
 
   insertAfter(item, key){
@@ -65,7 +71,7 @@ class LinkedList {
     let currentNode = this.head;
 
     if(this.head===null){
-      this.insertFirst(item);
+      return;
     }
 
     if(key===this.head.data){
@@ -73,8 +79,6 @@ class LinkedList {
       currentNode.next = newNode;
       return;
     }
-
-    
 
     while(currentNode!==null){
       if(currentNode.data===key){
@@ -95,12 +99,14 @@ class LinkedList {
 
     //if empty list
     if(this.head===null){
-      this.insertFirst(item);
       return;
     }
 
+    if (position < 0) {
+      throw new Error('Position error');
+    }
+
     if(position===1){
-      console.log('in here');
       this.insertFirst(item);
       return;
     }
@@ -116,8 +122,7 @@ class LinkedList {
       count++;
     }
 
-    //if the while loop finishes and it still hasn't been inserted, it should be at the end
-    this.insertLast(item);
+    return;
   }
 
   //possibly incorrect...
@@ -269,6 +274,17 @@ function findThirdFromLast(SLL){
   return null;
 }
 
+//Another solution: 
+// function thirdFromEnd(lst) {
+//   let thirdEnd = lst.head;
+//   let end = lst.head.next.next.next;
+//   while(end !== null) {
+//     thirdEnd = thirdEnd.next;
+//     end = end.next;
+//   }
+//   return thirdEnd.value;
+// };
+
 function findMiddle(SLL){
   //while traversing, 1->2->3->4->5
   //middle=middle.next
@@ -312,7 +328,44 @@ function reverseList(list){
     prev = current;
     current = nextNode;
   }
+  // update the head so we have access to the linked list
   list.head = prev;
+  return list;
+}
+
+function cycleList(SLL){
+  //if there's never a null then it's a cycle -- there's never an end
+  //find the size
+  let s = size(SLL);
+  // if(s===undefined){
+  //   return true;
+  // }
+  // else{
+  //   return false;
+  // }
+  console.log(size);
+  //iterate through it that many times
+  let count=1;
+  let current = SLL.head;
+  //if none of the pointers = null by the end, return true. Otherwise return false
+  while(count<=s){
+    if(current.next===null){
+      return false;
+    }
+    count++;
+  }
+  return true;
+}
+
+function makeListCycle(SLL){
+  let currentNode=SLL.head;
+  while(currentNode!==null){
+    if(currentNode.next===null){
+      currentNode.next=SLL.head;
+      return;
+    }
+    currentNode = currentNode.next;
+  }
 }
 
 function main() {
@@ -323,14 +376,17 @@ function main() {
 
   SLL.insertFirst('Apollo');
   SLL.insertLast('Boomer');
+  console.log(cycleList(SLL));
+  console.log(makeListCycle(SLL));
+  console.log(cycleList(SLL));
   // SLL.insertLast('Helo');
-  SLL.insertLast('Husker');
-  SLL.insertLast('Nikkie');
-  console.log('third from last is:', findThirdFromLast(SLL));
-  console.log('middle is:', findMiddle(SLL));
+  // SLL.insertLast('Husker');
+  // SLL.insertLast('Nikkie');
+  // console.log('third from last is:', findThirdFromLast(SLL));
+  // console.log('middle is:', findMiddle(SLL));
   // WhatDoesThisProgramDo(SLL);
-  reverseList(SLL);
-  displayList(SLL);
+  // reverseList(SLL);
+  // displayList(SLL);
   // SLL.insertLast('Starbuck')
   // SLL.insertLast('Tauhida')
   // SLL.remove('squirrel')
@@ -343,7 +399,6 @@ function main() {
   // console.log(isEmpty(test));
   // console.log(findPrevious(SLL, "Nikkie"));
   // console.log(findLast(test));
-
 }
 
 main();
